@@ -4,8 +4,7 @@ import Element as El -- exposing (fillPortion, spacing, padding, row, width, fil
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
-import Html exposing (Html)
-
+import Element.Input as Input
 
 myRowOfStuff : El.Element msg
 myRowOfStuff =
@@ -33,6 +32,9 @@ layout =
 white : El.Color
 white = El.rgb255 255 255 255
 
+blue : El.Color
+blue = El.rgb255 238 238 238
+
 header : El.Element msg
 header =
   El.column [ El.width El.fill, El.centerX, El.padding 0, El.spacing 0 ]
@@ -41,6 +43,7 @@ header =
        ,El.el [ El.centerX, El.padding 30, Font.color white, Font.size 18 ] (El.text "Programmer") 
       ]
 
+-- Utility function for making card views
 card : String -> El.Element msg -> El.Element msg
 card title element =
   El.row [El.spacing 30, El.width El.fill, El.paddingXY 100 40] [
@@ -71,43 +74,24 @@ aboutMe =
       ]
    ])
 
--- project : String -> El.Element msg
+hyperlink : String -> El.Element msg
+hyperlink label =
+  Input.button [ ] { onPress = Nothing, label = El.text label }
+
+project : String -> (String, Int, Int) -> String -> El.Element msg
+project name (image, width, height) desc =
+  El.column [ El.alignTop, El.width El.fill, El.spacing 20 ] [
+    El.el [ El.centerX ] ( hyperlink name )
+  , El.image [ El.centerX, El.width (El.fill |> El.maximum (width)), El.height (El.fill |> El.maximum (height))] { description = desc, src = image }
+  , El.el [ El.centerX ] ( El.text desc )
+    ]
 
 projects : El.Element msg
 projects = 
   card "Projects" (
-    El.column [] []
+    El.row [ El.width El.fill ] [
+      project "OpenGL Engine" ("../assets/opengl-engine-display.png", 300, 300) "2020-2022"
+    , project "C Graphics Library" ("../assets/fflib_pong.png", 300, 300) "A project I've been working on in spare time"
+    , project "RF Lang" ("../assets/rflang_logo.png", 300, 300) "A project I've been working on in spare time"
+    ]
     )
-
--- aboutMe = div [] [
---   h1 [] [ text "About Me" ]
---   ,p [] [ text "My name is Riley Fischer. My pride and joy is programming and constantly pushing my skills further and further into unknown territory. I am mostly self-taught, and started off programming in Java for Minecraft modding, then slowly moved into more complicated projects. Because I was much younger I don't have many records of my first projects. " ]
---   ]
-
-
--- new_project title image desc o
---   div [ class "flex" ] [
---     h6  [] [ text title ]
---   , img [ src image ] []
---   , p   [] [ text desc]
---   ]
--- 
--- projects =
---   Grid.container []
---     [ CDN.stylesheet
---     , Grid.row []
---       [ Grid.col []
---         [ new_project "OpenGL Engine" "images/openglengine.png" "This is a project I've been working on to sharpen my skills in the C programming language and OpenGL"
---         , new_project "Pong" "images/pong.png" "No desc yet"
---         , new_project "RF Lang" "images/rflang.png" "No desc yet"
---         ]
---       ]
---     ]
-  --div [ class "container"] [
-  --  div [ class "row"] [
-  --    h1 [] [ text "Projects" ]
-  --    , new_project "OpenGL Engine" "images/openglengine.png" "This is a project I've been working on to sharpen my skills in the C programming language and OpenGL"
-  --    , new_project "Pong" "images/pong.png" "No desc yet"
-  --    , new_project "RF Lang" "images/rflang.png" "No desc yet"
-  --  ]
-  --]
