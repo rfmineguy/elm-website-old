@@ -40,7 +40,7 @@ header =
 
 card : String -> El.Element msg -> El.Element msg
 card title element =
-  El.row [El.spacing 30, El.width El.fill, El.padding 100] [
+  El.row [El.spacing 30, El.width El.fill, El.paddingXY 100 40] [
     El.column [ El.centerX, El.width El.fill, Background.color (El.rgb255 89 89 89), El.spacing 30, El.padding 10, Border.rounded 4 ] [
       El.el [] (El.text title),
       El.column [ El.width (El.fillPortion 2)] [],
@@ -52,15 +52,18 @@ card title element =
 aboutMe : El.Element msg
 aboutMe =
   card "About Me" (
-    El.column [ El.spacing 20 ] [
-      El.el [] (El.paragraph [] [El.text """My name is Riley Fischer. My pride and joy is programming
-                    and constantly pushing my skills further and further 
-                  into unknown territory. I am mostly self-taught, and started off programming in Java for Minecraft modding, then slowly moved into more 
-                  complicated projects. Because I was much younger I don't have many records of my first projects."""])
-    , El.el [] (El.paragraph [] [El.text """I do however have most of my newer projects posted in github and listed further down this page. My most recent and most 
+    El.row [ El.width El.fill ] [
+      El.image [El.width (El.fillPortion 1), El.padding 3] {description = "", src = "../assets/riley_photo.jpeg"}
+      , El.column [ El.width (El.fillPortion 2), El.padding 3, El.spacing 20 ] [
+        El.el [] (El.paragraph [] [El.text """My name is Riley Fischer. My pride and joy is programming
+                      and constantly pushing my skills further and further 
+                      into unknown territory. I am mostly self-taught, and started off programming in Java for Minecraft modding, then slowly moved into more 
+                      complicated projects. Because I was much younger I don't have many records of my first projects."""])
+      , El.el [] (El.paragraph [] [El.text """I do however have most of my newer projects posted in github and listed further down this page. My most recent and most 
                   robust project to date is the beginnings of a basic game engine. I built it out of curiosity in OpenGL, and got lost in
                   how cool I found it so it grew into a much larger project than I initially intended very quickly"""])
-    ])
+      ]
+   ])
 
 projects : El.Element msg
 projects = 
