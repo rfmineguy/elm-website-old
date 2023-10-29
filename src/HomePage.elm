@@ -6,8 +6,6 @@ import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
 import Html.Styled as Html exposing (Html)
-import Html.Styled.Attributes as Html
-import Css
 
 import Html exposing (br)
 
@@ -28,7 +26,7 @@ darkGrey : El.Color
 darkGrey = El.rgb255 110 110 110
 
 asset_dir : String
-asset_dir = "assets/"
+asset_dir = "./assets/"
 
 header : El.Element msg
 header =
