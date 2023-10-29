@@ -5,6 +5,9 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Html.Styled as Html exposing (Html)
+import Html.Styled.Attributes as Html
+import Css
 
 import Html exposing (br)
 
@@ -24,6 +27,9 @@ grey = El.rgb255 210 210 210
 darkGrey : El.Color
 darkGrey = El.rgb255 110 110 110
 
+asset_dir : String
+asset_dir = "../"
+
 header : El.Element msg
 header =
   El.column [ El.width El.fill, El.centerX, El.padding 0, El.spacing 0 ]
@@ -35,7 +41,7 @@ header =
 -- Utility function for making card views
 card : String -> El.Element msg -> El.Element msg
 card title element =
-  El.row [El.spacing 30, El.width El.fill, El.paddingXY 100 40] [
+  El.row [El.spacing 30, El.width El.fill, El.paddingXY 100 40 ] [
     El.column [ El.centerX, El.width El.fill, Background.color white, El.spacing 30, El.padding 30, Border.rounded 4 ] [
       El.el [Font.size 30] (El.text title)
     , El.column [ El.width (El.fillPortion 2)] []
@@ -45,15 +51,15 @@ card title element =
   ]
 
 imageOfMe : El.Element msg
-imageOfMe = El.image [ El.alignLeft, El.width (El.fill |> El.maximum (86 * 4)), El.height El.fill ] { description = "", src = "assets/riley_photo.jpeg" }
+imageOfMe = El.image [ El.alignLeft, El.width (El.fill |> El.minimum (86 * 5)), El.height El.fill ] { description = "", src = asset_dir ++ "assets/riley_photo.jpeg" }
 
 aboutMe : El.Element msg
 aboutMe =
   card "About Me" (
-    El.row [ El.width El.fill ] [
-      El.column [ El.width El.fill, El.padding 3, El.spacing 20 ] [
-        imageOfMe
-      , El.el [] (El.paragraph [] [El.text """My name is Riley Fischer. My pride and joy is programming
+    El.wrappedRow [ El.width El.fill ] [
+      imageOfMe
+    , El.column [ El.width El.fill, El.padding 10, El.spacing 20 ] [
+      El.el [ El.width (El.fill |> El.minimum 300)] (El.paragraph [] [El.text """My name is Riley Fischer. My pride and joy is programming
                       and constantly pushing my skills further and further 
                       into unknown territory. I am mostly self-taught, and started off programming in Java for Minecraft modding, then slowly moved into more 
                       complicated projects. Because I was much younger I don't have many records of my first projects."""])
@@ -70,37 +76,42 @@ hyperlink label =
 
 project : String -> String -> (String, Int, Int) -> String -> El.Element msg
 project name url (image, width, height) desc =
-  El.column [ El.alignTop, El.width El.fill, El.spacing 20 ] [
-    El.el [ El.centerX ] ( El.link [Font.underline, Font.color blue] { url = url, label = El.text name } )
-  , El.image [ El.centerX, El.width (El.fill |> El.maximum (width)), El.height (El.fill |> El.maximum (height)) ] { description = desc, src = image }
-  , El.el [ El.centerX ] ( El.text desc )
+  El.wrappedRow [ El.width El.fill, El.spacing 20, Border.rounded 10, Border.width 2, Border.color darkGrey, Background.color grey  ] [
+    El.column [ El.width (El.fillPortion 1), El.height (El.fill), El.spacing 30, El.padding 20 ] [
+      El.el [El.centerX, Font.bold] (El.text name)
+    , El.image [ El.centerX, El.width (El.fill |> El.maximum width), El.height (El.fill |> El.maximum height)] { description = desc, src = image }
+    ]
+  , El.column [ El.spacing 90, El.paddingXY 0 50, El.width (El.fillPortion 2), El.height El.fill] [
+      El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text desc])
+    ]
   ]
 
 projects : El.Element msg
 projects =
   card "Projects" (
-    El.row [ El.width El.fill ] [
-      project "OpenGL Engine" "https://github.com/rfmineguy/opengl-engine" ("assets/opengl-engine-display.png", 300, 300) "2020-2022"
-    , project "Firefly Lib" "https://github.com/rfmineguy/firefly-lib" ("assets/fflib_pong.png", 300, 300) "A graphics library I've been working on in spare time"
-    , project "RF Lang" "https://github.com/rfmineguy/rflang-2" ("assets/rflang_logo.png", 300, 300) "A project I've been working on in spare time"
+    El.column [ El.width El.fill, El.spacing 30 ] [
+      project "OpenGL Engine" "https://github.com/rfmineguy/opengl-engine" (asset_dir ++ "assets/opengl-engine-display.png", 300, 300) "2020-2022"
+    , project "Firefly Lib" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "assets/fflib_pong.png", 300, 300) "A graphics library I've been working on in spare time"
+    , project "RF Lang" "https://github.com/rfmineguy/rflang-2" (asset_dir ++ "assets/rflang_logo.png", 300, 300) "a project i've been working on in spare time"
     ]
   )
 
 meAsADeveloper : El.Element msg
 meAsADeveloper =
+  let entry element = El.column [ El.alignTop, El.width El.fill, El.spacing 20, Border.width 1 ] element in
   card "Me As A Developer" (
-    El.row [ El.width El.fill ] [
-      El.column [ El.alignTop, El.width (El.fillPortion 1), El.spacing 20 ] [
-        El.image [ El.centerX, El.width (El.fill |> El.maximum 300) ] { description = "", src = "assets/nvim_screenshot.png" }
+    El.wrappedRow [ El.width El.fill ] [
+      entry [
+        El.image [ El.centerX, El.width (El.fill |> El.maximum 300) ] { description = "", src = asset_dir ++ "assets/nvim_screenshot.png" }
       ]
-    , El.column [ El.alignTop, El.width (El.fillPortion 1), El.spacing 20] [
+    , entry [
         El.el [ Font.bold ] (El.text """I can be comfortable in front 
 of almost any operating system""")
       , El.el [ ] (El.text "Windows - 5 to 6 years")
       , El.el [ ] (El.text "Linux - 1 to 2 years")
       , El.el [ ] (El.text "MacOS - 1 to 2 years")
       ] 
-    , El.column [ El.alignTop, El.width (El.fillPortion 1), El.spacing 20 ] [
+    , entry [
         El.el [ Font.bold ] (El.text "Programming Languages")
       , El.row [ ] [El.el [] (El.text "Java - 2 to 3 years"), El.el [ Font.italic ] (El.text " (Mostly through Minecraft)")]
       , El.row [ ] [El.el [] (El.text "C++  - 2 years")]
@@ -110,7 +121,7 @@ of almost any operating system""")
   )
 
 experienceElement : String -> String -> String -> El.Element msg
-experienceElement time title description =
+experienceElement time title description = 
   El.column [ El.width El.fill, El.spacing 15, El.padding 15, Border.rounded 10, Border.width 2, Border.color darkGrey, Background.color grey  ] [
     El.el [Font.size 17] (El.text time)
   , El.el [Font.size 22, Font.bold] (El.text title)
