@@ -5,9 +5,6 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Html.Styled as Html exposing (Html)
-
-import Html exposing (br)
 
 layout : El.Element msg
 layout =
@@ -19,14 +16,17 @@ white = El.rgb255 255 255 255
 blue : El.Color
 blue = El.rgb255 0 0 0xEE
 
+red : El.Color
+red = El.rgb255 0xEE 0 0
+
 grey : El.Color
 grey = El.rgb255 210 210 210
 
 darkGrey : El.Color
-darkGrey = El.rgb255 110 110 110
+darkGrey = El.rgb255 90 90 90
 
 asset_dir : String
-asset_dir = "./assets/"
+asset_dir = "./assets/"  -- this shouldn't be changed unless the assets move somewhere else (the ./ is also important)
 
 header : El.Element msg
 header =
@@ -74,14 +74,22 @@ hyperlink label =
 
 project : String -> String -> String -> (String, Int, Int) -> String -> El.Element msg
 project name date url (image, width, height) desc =
-  El.wrappedRow [ El.width El.fill, El.spacing 20, Border.rounded 10, Border.width 1, Border.color darkGrey, Background.color grey  ] [
+  El.wrappedRow [ El.width El.fill, El.spacing 20, Border.rounded 10, Border.width 2, Border.color darkGrey, Background.color grey  ] [
     El.column [ El.width (El.fillPortion 1), El.height (El.fill), El.spacing 30, El.padding 20 ] [
-      El.el [El.centerX, Font.bold] (El.text name)
-    , El.image [ El.centerX, El.width (El.fill |> El.maximum width), El.height (El.fill |> El.maximum height) ] { description = desc, src = image }
+      El.el [El.centerX, Font.bold] (El.link [] {label = El.text name, url = url})
+    , El.image [ El.centerX, El.centerY, Border.rounded 8, El.clip, El.centerX, El.width (El.fill |> El.maximum width), El.height (El.fill |> El.maximum height) ] { description = desc, src = image }
     ]
   , El.column [ El.spacing 5, El.paddingXY 0 50, El.width (El.fillPortion 2), El.height El.fill ] [
       El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text date])
     , El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text desc])
+    ]
+  ]
+
+project_more_info : El.Element msg
+project_more_info = 
+  El.wrappedRow [ El.width El.fill, El.spacing 20 ] [
+    El.column [ El.width El.fill, El.height El.fill] [
+      El.el [] ( El.paragraph [] [ El.text "For more information go visit my github profile at https://github.com/rfmineguy!" ])
     ]
   ]
 
@@ -99,18 +107,22 @@ projects =
   card "Projects" (
     El.column [ El.width El.fill, El.spacing 10 ] [
       project "OpenGL Engine" "2020-2022" "https://github.com/rfmineguy/opengl-engine" (asset_dir ++ "opengl-engine-display.png", 300, 300) opengl_engine_description
-    , project "Firefly Lib"   "2022-2023" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "fflib_pong.png", 300, 300) fireflylib_description
-    , project "RF Lang"       "2022-2023" "https://github.com/rfmineguy/rflang-2" (asset_dir ++ "rflang_logo.png", 300, 300) rflang_description
+    , project "Firefly Lib"   "2022-2023" "https://github.com/rfmineguy/firefly-lib"   (asset_dir ++ "fflib_pong.png", 300, 300)            fireflylib_description
+    , project "RF Lang"       "2022-2023" "https://github.com/rfmineguy/rflang-2"      (asset_dir ++ "rflang_logo.png", 300, 300)           rflang_description
+    , project_more_info
     ]
   )
 
 meAsADeveloper : El.Element msg
 meAsADeveloper =
-  let entry element = El.column [ El.alignTop, El.width El.fill, El.spacing 20, Border.width 1 ] element in
+  let entry element = El.column [ El.alignTop, El.width El.fill, El.height El.fill, El.spacing 20, El.padding 10, Border.width 2, Border.rounded 10, Background.color grey ] element in
   card "Me As A Developer" (
-    El.wrappedRow [ El.width El.fill ] [
+    El.wrappedRow [ El.width El.fill, El.spacing 10 ] [
       entry [
-        El.image [ El.centerX, El.width (El.fill |> El.maximum 300) ] { description = "", src = asset_dir ++ "nvim_screenshot.png" }
+        El.el [Font.bold ] (El.text "Editors")
+      , El.el [] (El.text "Neovim")
+      , El.el [] (El.text "IntelliJ IDEA")
+      , El.el [] (El.text "CLion")
       ]
     , entry [
         El.el [ Font.bold ] (El.text """I can be comfortable in front 
@@ -140,10 +152,10 @@ work : El.Element msg
 work = 
   card "Work" (
     El.column [ El.width El.fill, El.spacing 10 ] [
-      experienceElement "2022-2023" "Coder School" "I work as a code coach for 10-15 year olds working on programming projects"
+      experienceElement "2022-2023" "Coder School" "I work as a code coach for 10-15 year olds working on programming projects primarily in Unity C#"
     , experienceElement "2021-2022" "Tutor" "I worked as a tutor for an 8 year old 3rd grader to help get him through the work he needs to get done, and along with that comes a lot of me keeping him focused and on track."
     ]
-    )
+  )
 
 volunteer : El.Element msg
 volunteer =
@@ -151,7 +163,7 @@ volunteer =
     El.column [ El.width El.fill, El.spacing 10 ] [
       experienceElement "2022" "Beach Cleanup" "I went to Lake Tahoe to participate in a beach cleanup the day after 4th of July"
     , experienceElement "2016-2019" "School Cleanup" "I volunteered at my old elementary school to help keep the school looking clean and updated"
-      ]
+    ]
   )
 
 educationElement : String -> String -> String -> El.Element msg
@@ -167,5 +179,5 @@ education =
   card "Education" (
     El.column [ El.width El.fill, El.spacing 10 ] [
       educationElement "2021-2022" "Computer Science AS (In Progress)" "Las Positas Community College"
-      ]
+    ]
   )

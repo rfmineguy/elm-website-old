@@ -11113,7 +11113,7 @@ var $author$project$HomePage$card = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
 var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
-var $author$project$HomePage$asset_dir = 'assets/';
+var $author$project$HomePage$asset_dir = './assets/';
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
@@ -11460,7 +11460,7 @@ var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
 			'border-color',
 			clr));
 };
-var $author$project$HomePage$darkGrey = A3($mdgriffith$elm_ui$Element$rgb255, 110, 110, 110);
+var $author$project$HomePage$darkGrey = A3($mdgriffith$elm_ui$Element$rgb255, 90, 90, 90);
 var $author$project$HomePage$grey = A3($mdgriffith$elm_ui$Element$rgb255, 210, 210, 210);
 var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
@@ -11587,14 +11587,6 @@ var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
 var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
 var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
 var $mdgriffith$elm_ui$Element$Font$italic = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.italic);
-var $mdgriffith$elm_ui$Internal$Model$Max = F2(
-	function (a, b) {
-		return {$: 'Max', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Element$maximum = F2(
-	function (i, l) {
-		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
-	});
 var $author$project$HomePage$meAsADeveloper = function () {
 	var entry = function (element) {
 		return A2(
@@ -11603,8 +11595,12 @@ var $author$project$HomePage$meAsADeveloper = function () {
 				[
 					$mdgriffith$elm_ui$Element$alignTop,
 					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
 					$mdgriffith$elm_ui$Element$spacing(20),
-					$mdgriffith$elm_ui$Element$Border$width(1)
+					$mdgriffith$elm_ui$Element$padding(10),
+					$mdgriffith$elm_ui$Element$Border$width(2),
+					$mdgriffith$elm_ui$Element$Border$rounded(10),
+					$mdgriffith$elm_ui$Element$Background$color($author$project$HomePage$grey)
 				]),
 			element);
 	};
@@ -11615,7 +11611,8 @@ var $author$project$HomePage$meAsADeveloper = function () {
 			$mdgriffith$elm_ui$Element$wrappedRow,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$spacing(10)
 				]),
 			_List_fromArray(
 				[
@@ -11623,14 +11620,22 @@ var $author$project$HomePage$meAsADeveloper = function () {
 					_List_fromArray(
 						[
 							A2(
-							$mdgriffith$elm_ui$Element$image,
+							$mdgriffith$elm_ui$Element$el,
 							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$centerX,
-									$mdgriffith$elm_ui$Element$width(
-									A2($mdgriffith$elm_ui$Element$maximum, 300, $mdgriffith$elm_ui$Element$fill))
-								]),
-							{description: '', src: $author$project$HomePage$asset_dir + 'nvim_screenshot.png'})
+								[$mdgriffith$elm_ui$Element$Font$bold]),
+							$mdgriffith$elm_ui$Element$text('Editors')),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_Nil,
+							$mdgriffith$elm_ui$Element$text('Neovim')),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_Nil,
+							$mdgriffith$elm_ui$Element$text('IntelliJ IDEA')),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_Nil,
+							$mdgriffith$elm_ui$Element$text('CLion'))
 						])),
 					entry(
 					_List_fromArray(
@@ -11701,6 +11706,55 @@ var $author$project$HomePage$meAsADeveloper = function () {
 }();
 var $author$project$HomePage$fireflylib_description = 'This project is a fully code driven game library that has the ability to faciliate very simple games';
 var $author$project$HomePage$opengl_engine_description = 'This project is an attempt at making a somewhat functional game engine using opengl and a variety of other libraries';
+var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
+var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
+var $mdgriffith$elm_ui$Internal$Flag$overflow = $mdgriffith$elm_ui$Internal$Flag$flag(20);
+var $mdgriffith$elm_ui$Element$clip = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.clip);
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
+var $mdgriffith$elm_ui$Element$link = F2(
+	function (attrs, _v0) {
+		var url = _v0.url;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Internal$Model$Attr(
+					$elm$html$Html$Attributes$href(url)),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$Attr(
+						$elm$html$Html$Attributes$rel('noopener noreferrer')),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
+								attrs))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
+var $mdgriffith$elm_ui$Internal$Model$Max = F2(
+	function (a, b) {
+		return {$: 'Max', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Element$maximum = F2(
+	function (i, l) {
+		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
+	});
 var $author$project$HomePage$project = F5(
 	function (name, date, url, _v0, desc) {
 		var image = _v0.a;
@@ -11713,7 +11767,7 @@ var $author$project$HomePage$project = F5(
 					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 					$mdgriffith$elm_ui$Element$spacing(20),
 					$mdgriffith$elm_ui$Element$Border$rounded(10),
-					$mdgriffith$elm_ui$Element$Border$width(1),
+					$mdgriffith$elm_ui$Element$Border$width(2),
 					$mdgriffith$elm_ui$Element$Border$color($author$project$HomePage$darkGrey),
 					$mdgriffith$elm_ui$Element$Background$color($author$project$HomePage$grey)
 				]),
@@ -11735,11 +11789,21 @@ var $author$project$HomePage$project = F5(
 							$mdgriffith$elm_ui$Element$el,
 							_List_fromArray(
 								[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$Font$bold]),
-							$mdgriffith$elm_ui$Element$text(name)),
+							A2(
+								$mdgriffith$elm_ui$Element$link,
+								_List_Nil,
+								{
+									label: $mdgriffith$elm_ui$Element$text(name),
+									url: url
+								})),
 							A2(
 							$mdgriffith$elm_ui$Element$image,
 							_List_fromArray(
 								[
+									$mdgriffith$elm_ui$Element$centerX,
+									$mdgriffith$elm_ui$Element$centerY,
+									$mdgriffith$elm_ui$Element$Border$rounded(8),
+									$mdgriffith$elm_ui$Element$clip,
 									$mdgriffith$elm_ui$Element$centerX,
 									$mdgriffith$elm_ui$Element$width(
 									A2($mdgriffith$elm_ui$Element$maximum, width, $mdgriffith$elm_ui$Element$fill)),
@@ -11791,6 +11855,36 @@ var $author$project$HomePage$project = F5(
 						]))
 				]));
 	});
+var $author$project$HomePage$project_more_info = A2(
+	$mdgriffith$elm_ui$Element$wrappedRow,
+	_List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+			$mdgriffith$elm_ui$Element$spacing(20)
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$mdgriffith$elm_ui$Element$el,
+					_List_Nil,
+					A2(
+						$mdgriffith$elm_ui$Element$paragraph,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text('For more information go visit my github profile at https://github.com/rfmineguy!')
+							])))
+				]))
+		]));
 var $author$project$HomePage$rflang_description = 'An attempt to learn compiler development through designing my own language';
 var $author$project$HomePage$projects = A2(
 	$author$project$HomePage$card,
@@ -11824,7 +11918,8 @@ var $author$project$HomePage$projects = A2(
 				'2022-2023',
 				'https://github.com/rfmineguy/rflang-2',
 				_Utils_Tuple3($author$project$HomePage$asset_dir + 'rflang_logo.png', 300, 300),
-				$author$project$HomePage$rflang_description)
+				$author$project$HomePage$rflang_description),
+				$author$project$HomePage$project_more_info
 			])));
 var $author$project$HomePage$experienceElement = F3(
 	function (time, title, description) {
@@ -11899,7 +11994,7 @@ var $author$project$HomePage$work = A2(
 			]),
 		_List_fromArray(
 			[
-				A3($author$project$HomePage$experienceElement, '2022-2023', 'Coder School', 'I work as a code coach for 10-15 year olds working on programming projects'),
+				A3($author$project$HomePage$experienceElement, '2022-2023', 'Coder School', 'I work as a code coach for 10-15 year olds working on programming projects primarily in Unity C#'),
 				A3($author$project$HomePage$experienceElement, '2021-2022', 'Tutor', 'I worked as a tutor for an 8 year old 3rd grader to help get him through the work he needs to get done, and along with that comes a lot of me keeping him focused and on track.')
 			])));
 var $author$project$HomePage$layout = A2(
