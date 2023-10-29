@@ -41,7 +41,7 @@ header =
 -- Utility function for making card views
 card : String -> El.Element msg -> El.Element msg
 card title element =
-  El.row [El.spacing 30, El.width El.fill, El.paddingXY 100 40 ] [
+  El.row [ El.spacing 30, El.width El.fill, El.paddingXY 100 20 ] [
     El.column [ El.centerX, El.width El.fill, Background.color white, El.spacing 30, El.padding 30, Border.rounded 4 ] [
       El.el [Font.size 30] (El.text title)
     , El.column [ El.width (El.fillPortion 2)] []
@@ -74,25 +74,35 @@ hyperlink : String -> El.Element msg
 hyperlink label =
   Input.button [ ] { onPress = Nothing, label = El.text label }
 
-project : String -> String -> (String, Int, Int) -> String -> El.Element msg
-project name url (image, width, height) desc =
-  El.wrappedRow [ El.width El.fill, El.spacing 20, Border.rounded 10, Border.width 2, Border.color darkGrey, Background.color grey  ] [
+project : String -> String -> String -> (String, Int, Int) -> String -> El.Element msg
+project name date url (image, width, height) desc =
+  El.wrappedRow [ El.width El.fill, El.spacing 20, Border.rounded 10, Border.width 1, Border.color darkGrey, Background.color grey  ] [
     El.column [ El.width (El.fillPortion 1), El.height (El.fill), El.spacing 30, El.padding 20 ] [
       El.el [El.centerX, Font.bold] (El.text name)
-    , El.image [ El.centerX, El.width (El.fill |> El.maximum width), El.height (El.fill |> El.maximum height)] { description = desc, src = image }
+    , El.image [ El.centerX, El.width (El.fill |> El.maximum width), El.height (El.fill |> El.maximum height) ] { description = desc, src = image }
     ]
-  , El.column [ El.spacing 90, El.paddingXY 0 50, El.width (El.fillPortion 2), El.height El.fill] [
-      El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text desc])
+  , El.column [ El.spacing 5, El.paddingXY 0 50, El.width (El.fillPortion 2), El.height El.fill ] [
+      El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text date])
+    , El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text desc])
     ]
   ]
+
+opengl_engine_description : String
+opengl_engine_description = """This project is an attempt at making a somewhat functional game engine using opengl and a variety of other libraries"""
+
+fireflylib_description : String
+fireflylib_description = """This project is a fully code driven game library that has the ability to faciliate very simple games"""
+
+rflang_description : String
+rflang_description = """An attempt to learn compiler development through designing my own language"""
 
 projects : El.Element msg
 projects =
   card "Projects" (
-    El.column [ El.width El.fill, El.spacing 30 ] [
-      project "OpenGL Engine" "https://github.com/rfmineguy/opengl-engine" (asset_dir ++ "assets/opengl-engine-display.png", 300, 300) "2020-2022"
-    , project "Firefly Lib" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "assets/fflib_pong.png", 300, 300) "A graphics library I've been working on in spare time"
-    , project "RF Lang" "https://github.com/rfmineguy/rflang-2" (asset_dir ++ "assets/rflang_logo.png", 300, 300) "a project i've been working on in spare time"
+    El.column [ El.width El.fill, El.spacing 10 ] [
+      project "OpenGL Engine" "2020-2022" "https://github.com/rfmineguy/opengl-engine" (asset_dir ++ "assets/opengl-engine-display.png", 300, 300) opengl_engine_description
+    , project "Firefly Lib"   "2022-2023" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "assets/fflib_pong.png", 300, 300) fireflylib_description
+    , project "RF Lang"       "2022-2023" "https://github.com/rfmineguy/rflang-2" (asset_dir ++ "assets/rflang_logo.png", 300, 300) rflang_description
     ]
   )
 
@@ -131,7 +141,7 @@ experienceElement time title description =
 work : El.Element msg
 work = 
   card "Work" (
-    El.column [ El.width El.fill, El.spacing 50 ] [
+    El.column [ El.width El.fill, El.spacing 10 ] [
       experienceElement "2022-2023" "Coder School" "I work as a code coach for 10-15 year olds working on programming projects"
     , experienceElement "2021-2022" "Tutor" "I worked as a tutor for an 8 year old 3rd grader to help get him through the work he needs to get done, and along with that comes a lot of me keeping him focused and on track."
     ]
@@ -140,7 +150,7 @@ work =
 volunteer : El.Element msg
 volunteer =
   card "Volunteer" (
-    El.column [ El.width El.fill, El.spacing 50 ] [
+    El.column [ El.width El.fill, El.spacing 10 ] [
       experienceElement "2022" "Beach Cleanup" "I went to Lake Tahoe to participate in a beach cleanup the day after 4th of July"
     , experienceElement "2016-2019" "School Cleanup" "I volunteered at my old elementary school to help keep the school looking clean and updated"
       ]
@@ -157,7 +167,7 @@ educationElement time title description =
 education : El.Element msg
 education =
   card "Education" (
-    El.column [ El.width El.fill, El.spacing 50 ] [
+    El.column [ El.width El.fill, El.spacing 10 ] [
       educationElement "2021-2022" "Computer Science AS (In Progress)" "Las Positas Community College"
       ]
   )
