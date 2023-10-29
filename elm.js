@@ -5263,6 +5263,10 @@ var $mdgriffith$elm_ui$Element$Background$color = function (clr) {
 			'background-color',
 			clr));
 };
+var $mdgriffith$elm_ui$Internal$Model$Attr = function (a) {
+	return {$: 'Attr', a: a};
+};
+var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
 var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 	return {$: 'AlignX', a: a};
 };
@@ -10869,9 +10873,6 @@ var $mdgriffith$elm_ui$Internal$Model$Height = function (a) {
 	return {$: 'Height', a: a};
 };
 var $mdgriffith$elm_ui$Element$height = $mdgriffith$elm_ui$Internal$Model$Height;
-var $mdgriffith$elm_ui$Internal$Model$Attr = function (a) {
-	return {$: 'Attr', a: a};
-};
 var $mdgriffith$elm_ui$Internal$Model$htmlClass = function (cls) {
 	return $mdgriffith$elm_ui$Internal$Model$Attr(
 		$elm$html$Html$Attributes$class(cls));
@@ -10922,7 +10923,6 @@ var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
 };
 var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
 var $mdgriffith$elm_ui$Element$fillPortion = $mdgriffith$elm_ui$Internal$Model$Fill;
-var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
 var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
 	function (a, b, c, d, e) {
 		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
@@ -11030,8 +11030,6 @@ var $mdgriffith$elm_ui$Element$spacing = function (x) {
 			x,
 			x));
 };
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 	return {$: 'Text', a: a};
 };
@@ -11055,9 +11053,7 @@ var $author$project$HomePage$card = F2(
 				[
 					$mdgriffith$elm_ui$Element$spacing(30),
 					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					A2($mdgriffith$elm_ui$Element$paddingXY, 100, 40),
-					$mdgriffith$elm_ui$Element$htmlAttribute(
-					A2($elm$html$Html$Attributes$style, 'flex', '0 0 200px'))
+					A2($mdgriffith$elm_ui$Element$paddingXY, 100, 20)
 				]),
 			_List_fromArray(
 				[
@@ -11103,7 +11099,7 @@ var $author$project$HomePage$card = F2(
 	});
 var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
 var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
-var $author$project$HomePage$asset_dir = '../';
+var $author$project$HomePage$asset_dir = 'assets/';
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
@@ -11155,13 +11151,13 @@ var $mdgriffith$elm_ui$Element$image = F2(
 						$mdgriffith$elm_ui$Internal$Model$Unkeyed(_List_Nil))
 					])));
 	});
-var $mdgriffith$elm_ui$Internal$Model$Max = F2(
+var $mdgriffith$elm_ui$Internal$Model$Min = F2(
 	function (a, b) {
-		return {$: 'Max', a: a, b: b};
+		return {$: 'Min', a: a, b: b};
 	});
-var $mdgriffith$elm_ui$Element$maximum = F2(
+var $mdgriffith$elm_ui$Element$minimum = F2(
 	function (i, l) {
-		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
+		return A2($mdgriffith$elm_ui$Internal$Model$Min, i, l);
 	});
 var $author$project$HomePage$imageOfMe = A2(
 	$mdgriffith$elm_ui$Element$image,
@@ -11169,10 +11165,10 @@ var $author$project$HomePage$imageOfMe = A2(
 		[
 			$mdgriffith$elm_ui$Element$alignLeft,
 			$mdgriffith$elm_ui$Element$width(
-			A2($mdgriffith$elm_ui$Element$maximum, 86 * 4, $mdgriffith$elm_ui$Element$fill)),
+			A2($mdgriffith$elm_ui$Element$minimum, 86 * 5, $mdgriffith$elm_ui$Element$fill)),
 			$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
 		]),
-	{description: '', src: $author$project$HomePage$asset_dir + 'assets/riley_photo.jpeg'});
+	{description: '', src: $author$project$HomePage$asset_dir + 'riley_photo.jpeg'});
 var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
 	return {$: 'Describe', a: a};
 };
@@ -11195,31 +11191,225 @@ var $mdgriffith$elm_ui$Element$paragraph = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
+var $mdgriffith$elm_ui$Internal$Model$Padding = F5(
+	function (a, b, c, d, e) {
+		return {$: 'Padding', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Internal$Model$Spaced = F3(
+	function (a, b, c) {
+		return {$: 'Spaced', a: a, b: b, c: c};
+	});
+var $mdgriffith$elm_ui$Internal$Model$extractSpacingAndPadding = function (attrs) {
+	return A3(
+		$elm$core$List$foldr,
+		F2(
+			function (attr, _v0) {
+				var pad = _v0.a;
+				var spacing = _v0.b;
+				return _Utils_Tuple2(
+					function () {
+						if (pad.$ === 'Just') {
+							var x = pad.a;
+							return pad;
+						} else {
+							if ((attr.$ === 'StyleClass') && (attr.b.$ === 'PaddingStyle')) {
+								var _v3 = attr.b;
+								var name = _v3.a;
+								var t = _v3.b;
+								var r = _v3.c;
+								var b = _v3.d;
+								var l = _v3.e;
+								return $elm$core$Maybe$Just(
+									A5($mdgriffith$elm_ui$Internal$Model$Padding, name, t, r, b, l));
+							} else {
+								return $elm$core$Maybe$Nothing;
+							}
+						}
+					}(),
+					function () {
+						if (spacing.$ === 'Just') {
+							var x = spacing.a;
+							return spacing;
+						} else {
+							if ((attr.$ === 'StyleClass') && (attr.b.$ === 'SpacingStyle')) {
+								var _v6 = attr.b;
+								var name = _v6.a;
+								var x = _v6.b;
+								var y = _v6.c;
+								return $elm$core$Maybe$Just(
+									A3($mdgriffith$elm_ui$Internal$Model$Spaced, name, x, y));
+							} else {
+								return $elm$core$Maybe$Nothing;
+							}
+						}
+					}());
+			}),
+		_Utils_Tuple2($elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing),
+		attrs);
+};
+var $mdgriffith$elm_ui$Internal$Model$paddingNameFloat = F4(
+	function (top, right, bottom, left) {
+		return 'pad-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(top) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(right) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(bottom) + ('-' + $mdgriffith$elm_ui$Internal$Model$floatClass(left)))))));
+	});
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $mdgriffith$elm_ui$Element$wrappedRow = F2(
+	function (attrs, children) {
+		var _v0 = $mdgriffith$elm_ui$Internal$Model$extractSpacingAndPadding(attrs);
+		var padded = _v0.a;
+		var spaced = _v0.b;
+		if (spaced.$ === 'Nothing') {
+			return A4(
+				$mdgriffith$elm_ui$Internal$Model$element,
+				$mdgriffith$elm_ui$Internal$Model$asRow,
+				$mdgriffith$elm_ui$Internal$Model$div,
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+							attrs))),
+				$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+		} else {
+			var _v2 = spaced.a;
+			var spaceName = _v2.a;
+			var x = _v2.b;
+			var y = _v2.c;
+			var newPadding = function () {
+				if (padded.$ === 'Just') {
+					var _v5 = padded.a;
+					var name = _v5.a;
+					var t = _v5.b;
+					var r = _v5.c;
+					var b = _v5.d;
+					var l = _v5.e;
+					if ((_Utils_cmp(r, x / 2) > -1) && (_Utils_cmp(b, y / 2) > -1)) {
+						var newTop = t - (y / 2);
+						var newRight = r - (x / 2);
+						var newLeft = l - (x / 2);
+						var newBottom = b - (y / 2);
+						return $elm$core$Maybe$Just(
+							A2(
+								$mdgriffith$elm_ui$Internal$Model$StyleClass,
+								$mdgriffith$elm_ui$Internal$Flag$padding,
+								A5(
+									$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+									A4($mdgriffith$elm_ui$Internal$Model$paddingNameFloat, newTop, newRight, newBottom, newLeft),
+									newTop,
+									newRight,
+									newBottom,
+									newLeft)));
+					} else {
+						return $elm$core$Maybe$Nothing;
+					}
+				} else {
+					return $elm$core$Maybe$Nothing;
+				}
+			}();
+			if (newPadding.$ === 'Just') {
+				var pad = newPadding.a;
+				return A4(
+					$mdgriffith$elm_ui$Internal$Model$element,
+					$mdgriffith$elm_ui$Internal$Model$asRow,
+					$mdgriffith$elm_ui$Internal$Model$div,
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+								_Utils_ap(
+									attrs,
+									_List_fromArray(
+										[pad]))))),
+					$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+			} else {
+				var halfY = -(y / 2);
+				var halfX = -(x / 2);
+				return A4(
+					$mdgriffith$elm_ui$Internal$Model$element,
+					$mdgriffith$elm_ui$Internal$Model$asEl,
+					$mdgriffith$elm_ui$Internal$Model$div,
+					attrs,
+					$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+						_List_fromArray(
+							[
+								A4(
+								$mdgriffith$elm_ui$Internal$Model$element,
+								$mdgriffith$elm_ui$Internal$Model$asRow,
+								$mdgriffith$elm_ui$Internal$Model$div,
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Internal$Model$Attr(
+											A2(
+												$elm$html$Html$Attributes$style,
+												'margin',
+												$elm$core$String$fromFloat(halfY) + ('px' + (' ' + ($elm$core$String$fromFloat(halfX) + 'px'))))),
+										A2(
+											$elm$core$List$cons,
+											$mdgriffith$elm_ui$Internal$Model$Attr(
+												A2(
+													$elm$html$Html$Attributes$style,
+													'width',
+													'calc(100% + ' + ($elm$core$String$fromInt(x) + 'px)'))),
+											A2(
+												$elm$core$List$cons,
+												$mdgriffith$elm_ui$Internal$Model$Attr(
+													A2(
+														$elm$html$Html$Attributes$style,
+														'height',
+														'calc(100% + ' + ($elm$core$String$fromInt(y) + 'px)'))),
+												A2(
+													$elm$core$List$cons,
+													A2(
+														$mdgriffith$elm_ui$Internal$Model$StyleClass,
+														$mdgriffith$elm_ui$Internal$Flag$spacing,
+														A3($mdgriffith$elm_ui$Internal$Model$SpacingStyle, spaceName, x, y)),
+													_List_Nil))))),
+								$mdgriffith$elm_ui$Internal$Model$Unkeyed(children))
+							])));
+			}
+		}
+	});
 var $author$project$HomePage$aboutMe = A2(
 	$author$project$HomePage$card,
 	'About Me',
 	A2(
-		$mdgriffith$elm_ui$Element$row,
+		$mdgriffith$elm_ui$Element$wrappedRow,
 		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
 			]),
 		_List_fromArray(
 			[
+				$author$project$HomePage$imageOfMe,
 				A2(
 				$mdgriffith$elm_ui$Element$column,
 				_List_fromArray(
 					[
 						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-						$mdgriffith$elm_ui$Element$padding(3),
+						$mdgriffith$elm_ui$Element$padding(10),
 						$mdgriffith$elm_ui$Element$spacing(20)
 					]),
 				_List_fromArray(
 					[
-						$author$project$HomePage$imageOfMe,
 						A2(
 						$mdgriffith$elm_ui$Element$el,
-						_List_Nil,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$width(
+								A2($mdgriffith$elm_ui$Element$minimum, 300, $mdgriffith$elm_ui$Element$fill))
+							]),
 						A2(
 							$mdgriffith$elm_ui$Element$paragraph,
 							_List_Nil,
@@ -11328,7 +11518,7 @@ var $author$project$HomePage$education = A2(
 		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-				$mdgriffith$elm_ui$Element$spacing(50)
+				$mdgriffith$elm_ui$Element$spacing(10)
 			]),
 		_List_fromArray(
 			[
@@ -11352,9 +11542,7 @@ var $author$project$HomePage$header = A2(
 			$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
 			$mdgriffith$elm_ui$Element$centerX,
 			$mdgriffith$elm_ui$Element$padding(0),
-			$mdgriffith$elm_ui$Element$spacing(0),
-			$mdgriffith$elm_ui$Element$htmlAttribute(
-			A2($elm$html$Html$Attributes$style, 'flex', '0 0 200px'))
+			$mdgriffith$elm_ui$Element$spacing(0)
 		]),
 	_List_fromArray(
 		[
@@ -11385,238 +11573,244 @@ var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
 var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
 var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
 var $mdgriffith$elm_ui$Element$Font$italic = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.italic);
-var $author$project$HomePage$meAsADeveloper = A2(
-	$author$project$HomePage$card,
-	'Me As A Developer',
-	A2(
-		$mdgriffith$elm_ui$Element$row,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-			]),
-		_List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Element$column,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$alignTop,
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$fillPortion(1)),
-						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
-						$mdgriffith$elm_ui$Element$spacing(20)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$image,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$centerX,
-								$mdgriffith$elm_ui$Element$width(
-								A2($mdgriffith$elm_ui$Element$maximum, 300, $mdgriffith$elm_ui$Element$fill))
-							]),
-						{description: '', src: $author$project$HomePage$asset_dir + 'assets/nvim_screenshot.png'})
-					])),
-				A2(
-				$mdgriffith$elm_ui$Element$column,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$alignTop,
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$fillPortion(1)),
-						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
-						$mdgriffith$elm_ui$Element$spacing(20)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$Font$bold]),
-						$mdgriffith$elm_ui$Element$text('I can be comfortable in front \nof almost any operating system')),
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_Nil,
-						$mdgriffith$elm_ui$Element$text('Windows - 5 to 6 years')),
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_Nil,
-						$mdgriffith$elm_ui$Element$text('Linux - 1 to 2 years')),
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_Nil,
-						$mdgriffith$elm_ui$Element$text('MacOS - 1 to 2 years'))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Element$column,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$alignTop,
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$fillPortion(1)),
-						$mdgriffith$elm_ui$Element$spacing(20)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$Font$bold]),
-						$mdgriffith$elm_ui$Element$text('Programming Languages')),
-						A2(
-						$mdgriffith$elm_ui$Element$row,
-						_List_Nil,
-						_List_fromArray(
-							[
-								A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_Nil,
-								$mdgriffith$elm_ui$Element$text('Java - 2 to 3 years')),
-								A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Element$Font$italic]),
-								$mdgriffith$elm_ui$Element$text(' (Mostly through Minecraft)'))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Element$row,
-						_List_Nil,
-						_List_fromArray(
-							[
-								A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_Nil,
-								$mdgriffith$elm_ui$Element$text('C++  - 2 years'))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Element$row,
-						_List_Nil,
-						_List_fromArray(
-							[
-								A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_Nil,
-								$mdgriffith$elm_ui$Element$text('C    - 1 year'))
-							]))
-					]))
-			])));
-var $author$project$HomePage$blue = A3($mdgriffith$elm_ui$Element$rgb255, 0, 0, 238);
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
-var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
-var $mdgriffith$elm_ui$Element$link = F2(
-	function (attrs, _v0) {
-		var url = _v0.url;
-		var label = _v0.label;
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$Attr(
-					$elm$html$Html$Attributes$href(url)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Internal$Model$Attr(
-						$elm$html$Html$Attributes$rel('noopener noreferrer')),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-						A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
-								attrs))))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[label])));
+var $mdgriffith$elm_ui$Internal$Model$Max = F2(
+	function (a, b) {
+		return {$: 'Max', a: a, b: b};
 	});
-var $mdgriffith$elm_ui$Element$Font$underline = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.underline);
-var $author$project$HomePage$project = F4(
-	function (name, url, _v0, desc) {
-		var image = _v0.a;
-		var width = _v0.b;
-		var height = _v0.c;
+var $mdgriffith$elm_ui$Element$maximum = F2(
+	function (i, l) {
+		return A2($mdgriffith$elm_ui$Internal$Model$Max, i, l);
+	});
+var $author$project$HomePage$meAsADeveloper = function () {
+	var entry = function (element) {
 		return A2(
 			$mdgriffith$elm_ui$Element$column,
 			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$alignTop,
 					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					$mdgriffith$elm_ui$Element$spacing(20)
+					$mdgriffith$elm_ui$Element$spacing(20),
+					$mdgriffith$elm_ui$Element$Border$width(1)
+				]),
+			element);
+	};
+	return A2(
+		$author$project$HomePage$card,
+		'Me As A Developer',
+		A2(
+			$mdgriffith$elm_ui$Element$wrappedRow,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+				]),
+			_List_fromArray(
+				[
+					entry(
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$image,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$centerX,
+									$mdgriffith$elm_ui$Element$width(
+									A2($mdgriffith$elm_ui$Element$maximum, 300, $mdgriffith$elm_ui$Element$fill))
+								]),
+							{description: '', src: $author$project$HomePage$asset_dir + 'nvim_screenshot.png'})
+						])),
+					entry(
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$Font$bold]),
+							$mdgriffith$elm_ui$Element$text('I can be comfortable in front \nof almost any operating system')),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_Nil,
+							$mdgriffith$elm_ui$Element$text('Windows - 5 to 6 years')),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_Nil,
+							$mdgriffith$elm_ui$Element$text('Linux - 1 to 2 years')),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_Nil,
+							$mdgriffith$elm_ui$Element$text('MacOS - 1 to 2 years'))
+						])),
+					entry(
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$Font$bold]),
+							$mdgriffith$elm_ui$Element$text('Programming Languages')),
+							A2(
+							$mdgriffith$elm_ui$Element$row,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$mdgriffith$elm_ui$Element$el,
+									_List_Nil,
+									$mdgriffith$elm_ui$Element$text('Java - 2 to 3 years')),
+									A2(
+									$mdgriffith$elm_ui$Element$el,
+									_List_fromArray(
+										[$mdgriffith$elm_ui$Element$Font$italic]),
+									$mdgriffith$elm_ui$Element$text(' (Mostly through Minecraft)'))
+								])),
+							A2(
+							$mdgriffith$elm_ui$Element$row,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$mdgriffith$elm_ui$Element$el,
+									_List_Nil,
+									$mdgriffith$elm_ui$Element$text('C++  - 2 years'))
+								])),
+							A2(
+							$mdgriffith$elm_ui$Element$row,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A2(
+									$mdgriffith$elm_ui$Element$el,
+									_List_Nil,
+									$mdgriffith$elm_ui$Element$text('C    - 1 year'))
+								]))
+						]))
+				])));
+}();
+var $author$project$HomePage$fireflylib_description = 'This project is a fully code driven game library that has the ability to faciliate very simple games';
+var $author$project$HomePage$opengl_engine_description = 'This project is an attempt at making a somewhat functional game engine using opengl and a variety of other libraries';
+var $author$project$HomePage$project = F5(
+	function (name, date, url, _v0, desc) {
+		var image = _v0.a;
+		var width = _v0.b;
+		var height = _v0.c;
+		return A2(
+			$mdgriffith$elm_ui$Element$wrappedRow,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+					$mdgriffith$elm_ui$Element$spacing(20),
+					$mdgriffith$elm_ui$Element$Border$rounded(10),
+					$mdgriffith$elm_ui$Element$Border$width(1),
+					$mdgriffith$elm_ui$Element$Border$color($author$project$HomePage$darkGrey),
+					$mdgriffith$elm_ui$Element$Background$color($author$project$HomePage$grey)
 				]),
 			_List_fromArray(
 				[
 					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[$mdgriffith$elm_ui$Element$centerX]),
-					A2(
-						$mdgriffith$elm_ui$Element$link,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Font$underline,
-								$mdgriffith$elm_ui$Element$Font$color($author$project$HomePage$blue)
-							]),
-						{
-							label: $mdgriffith$elm_ui$Element$text(name),
-							url: url
-						})),
-					A2(
-					$mdgriffith$elm_ui$Element$image,
+					$mdgriffith$elm_ui$Element$column,
 					_List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$centerX,
 							$mdgriffith$elm_ui$Element$width(
-							A2($mdgriffith$elm_ui$Element$maximum, width, $mdgriffith$elm_ui$Element$fill)),
-							$mdgriffith$elm_ui$Element$height(
-							A2($mdgriffith$elm_ui$Element$maximum, height, $mdgriffith$elm_ui$Element$fill))
+							$mdgriffith$elm_ui$Element$fillPortion(1)),
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill),
+							$mdgriffith$elm_ui$Element$spacing(30),
+							$mdgriffith$elm_ui$Element$padding(20)
 						]),
-					{description: desc, src: image}),
-					A2(
-					$mdgriffith$elm_ui$Element$el,
 					_List_fromArray(
-						[$mdgriffith$elm_ui$Element$centerX]),
-					$mdgriffith$elm_ui$Element$text(desc))
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$Font$bold]),
+							$mdgriffith$elm_ui$Element$text(name)),
+							A2(
+							$mdgriffith$elm_ui$Element$image,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$centerX,
+									$mdgriffith$elm_ui$Element$width(
+									A2($mdgriffith$elm_ui$Element$maximum, width, $mdgriffith$elm_ui$Element$fill)),
+									$mdgriffith$elm_ui$Element$height(
+									A2($mdgriffith$elm_ui$Element$maximum, height, $mdgriffith$elm_ui$Element$fill))
+								]),
+							{description: desc, src: image})
+						])),
+					A2(
+					$mdgriffith$elm_ui$Element$column,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$spacing(5),
+							A2($mdgriffith$elm_ui$Element$paddingXY, 0, 50),
+							$mdgriffith$elm_ui$Element$width(
+							$mdgriffith$elm_ui$Element$fillPortion(2)),
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$fill)
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$alignTop]),
+							A2(
+								$mdgriffith$elm_ui$Element$paragraph,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$Font$size(20)
+									]),
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$text(date)
+									]))),
+							A2(
+							$mdgriffith$elm_ui$Element$el,
+							_List_fromArray(
+								[$mdgriffith$elm_ui$Element$alignTop]),
+							A2(
+								$mdgriffith$elm_ui$Element$paragraph,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$Font$size(20)
+									]),
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$text(desc)
+									])))
+						]))
 				]));
 	});
+var $author$project$HomePage$rflang_description = 'An attempt to learn compiler development through designing my own language';
 var $author$project$HomePage$projects = A2(
 	$author$project$HomePage$card,
 	'Projects',
 	A2(
-		$mdgriffith$elm_ui$Element$row,
+		$mdgriffith$elm_ui$Element$column,
 		_List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
+				$mdgriffith$elm_ui$Element$spacing(10)
 			]),
 		_List_fromArray(
 			[
-				A4(
+				A5(
 				$author$project$HomePage$project,
 				'OpenGL Engine',
+				'2020-2022',
 				'https://github.com/rfmineguy/opengl-engine',
-				_Utils_Tuple3($author$project$HomePage$asset_dir + 'assets/opengl-engine-display.png', 300, 300),
-				'2020-2022'),
-				A4(
+				_Utils_Tuple3($author$project$HomePage$asset_dir + 'opengl-engine-display.png', 300, 300),
+				$author$project$HomePage$opengl_engine_description),
+				A5(
 				$author$project$HomePage$project,
 				'Firefly Lib',
+				'2022-2023',
 				'https://github.com/rfmineguy/firefly-lib',
-				_Utils_Tuple3($author$project$HomePage$asset_dir + 'assets/fflib_pong.png', 300, 300),
-				'A graphics library I\'ve been working on in spare time'),
-				A4(
+				_Utils_Tuple3($author$project$HomePage$asset_dir + 'fflib_pong.png', 300, 300),
+				$author$project$HomePage$fireflylib_description),
+				A5(
 				$author$project$HomePage$project,
 				'RF Lang',
+				'2022-2023',
 				'https://github.com/rfmineguy/rflang-2',
-				_Utils_Tuple3($author$project$HomePage$asset_dir + 'assets/rflang_logo.png', 300, 300),
-				'A project I\'ve been working on in spare time')
+				_Utils_Tuple3($author$project$HomePage$asset_dir + 'rflang_logo.png', 300, 300),
+				$author$project$HomePage$rflang_description)
 			])));
 var $author$project$HomePage$experienceElement = F3(
 	function (time, title, description) {
@@ -11672,7 +11866,7 @@ var $author$project$HomePage$volunteer = A2(
 		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-				$mdgriffith$elm_ui$Element$spacing(50)
+				$mdgriffith$elm_ui$Element$spacing(10)
 			]),
 		_List_fromArray(
 			[
@@ -11687,7 +11881,7 @@ var $author$project$HomePage$work = A2(
 		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-				$mdgriffith$elm_ui$Element$spacing(50)
+				$mdgriffith$elm_ui$Element$spacing(10)
 			]),
 		_List_fromArray(
 			[
@@ -12021,7 +12215,9 @@ var $author$project$Main$view = function (model) {
 		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Background$color(
-				A3($mdgriffith$elm_ui$Element$rgb255, 105, 126, 171))
+				A3($mdgriffith$elm_ui$Element$rgb255, 105, 126, 171)),
+				$mdgriffith$elm_ui$Element$htmlAttribute(
+				A2($elm$html$Html$Attributes$style, 'flex-container', ''))
 			]),
 		$author$project$HomePage$layout);
 };
