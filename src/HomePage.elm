@@ -28,7 +28,7 @@ darkGrey : El.Color
 darkGrey = El.rgb255 110 110 110
 
 asset_dir : String
-asset_dir = "../"
+asset_dir = "assets/"
 
 header : El.Element msg
 header =
@@ -38,7 +38,7 @@ header =
       , El.el [ El.centerX, El.padding 30, Font.color white, Font.size 18 ] (El.text "Programmer")
       ]
 
--- Utility function for making card views
+-- Utility function for making card view
 card : String -> El.Element msg -> El.Element msg
 card title element =
   El.row [ El.spacing 30, El.width El.fill, El.paddingXY 100 20 ] [
@@ -51,7 +51,7 @@ card title element =
   ]
 
 imageOfMe : El.Element msg
-imageOfMe = El.image [ El.alignLeft, El.width (El.fill |> El.minimum (86 * 5)), El.height El.fill ] { description = "", src = asset_dir ++ "assets/riley_photo.jpeg" }
+imageOfMe = El.image [ El.alignLeft, El.width (El.fill |> El.minimum (86 * 5)), El.height El.fill ] { description = "", src = asset_dir ++ "riley_photo.jpeg" }
 
 aboutMe : El.Element msg
 aboutMe =
@@ -100,9 +100,9 @@ projects : El.Element msg
 projects =
   card "Projects" (
     El.column [ El.width El.fill, El.spacing 10 ] [
-      project "OpenGL Engine" "2020-2022" "https://github.com/rfmineguy/opengl-engine" (asset_dir ++ "assets/opengl-engine-display.png", 300, 300) opengl_engine_description
-    , project "Firefly Lib"   "2022-2023" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "assets/fflib_pong.png", 300, 300) fireflylib_description
-    , project "RF Lang"       "2022-2023" "https://github.com/rfmineguy/rflang-2" (asset_dir ++ "assets/rflang_logo.png", 300, 300) rflang_description
+      project "OpenGL Engine" "2020-2022" "https://github.com/rfmineguy/opengl-engine" (asset_dir ++ "opengl-engine-display.png", 300, 300) opengl_engine_description
+    , project "Firefly Lib"   "2022-2023" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "fflib_pong.png", 300, 300) fireflylib_description
+    , project "RF Lang"       "2022-2023" "https://github.com/rfmineguy/rflang-2" (asset_dir ++ "rflang_logo.png", 300, 300) rflang_description
     ]
   )
 
@@ -112,7 +112,7 @@ meAsADeveloper =
   card "Me As A Developer" (
     El.wrappedRow [ El.width El.fill ] [
       entry [
-        El.image [ El.centerX, El.width (El.fill |> El.maximum 300) ] { description = "", src = asset_dir ++ "assets/nvim_screenshot.png" }
+        El.image [ El.centerX, El.width (El.fill |> El.maximum 300) ] { description = "", src = asset_dir ++ "nvim_screenshot.png" }
       ]
     , entry [
         El.el [ Font.bold ] (El.text """I can be comfortable in front 
