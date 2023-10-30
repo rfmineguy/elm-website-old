@@ -205,6 +205,6 @@ education =
   card "Education" (
     El.column [ El.width El.fill, El.spacing 10 ] [
       educationElement "2021-2022" "Computer Science AS (In Progress)" "Las Positas Community College"
-    , educationElement "2021-2022" "Computer Science AS (In Progress)" "Las Positas Community College"
+    -- , educationElement "2021-2022" "Computer Science AS (In Progress)" "Las Positas Community College"
     ]
   )
