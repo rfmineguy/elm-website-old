@@ -1,10 +1,38 @@
 module HomePage exposing (..)
 
-import Element as El -- exposing (fillPortion, spacing, padding, row, width, fill, rgb255, el, centerX, text, Element)
+import Element as El
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
+import Simple.Animation as Animation exposing (Animation)
+import Simple.Animation.Animated as Animated
+import Simple.Animation.Property as P
+
+easeAnimation : Animation
+easeAnimation =
+  Animation.fromTo
+  { duration = 400
+  , options = [ Animation.easeInQuart ]
+  }
+  [ P.opacity 0 ]
+  [ P.opacity 1 ]
+
+animatedLayout : El.Element msg
+animatedLayout =
+  animatedEl easeAnimation [] layout
+
+animatedEl : Animation -> List (El.Attribute msg) -> El.Element msg -> El.Element msg
+animatedEl =
+  animatedUi El.el
+
+animatedUi =
+  Animated.ui
+  {
+    behindContent = El.behindContent
+  , htmlAttribute = El.htmlAttribute
+  , html = El.html
+  }
 
 layout : El.Element msg
 layout =
@@ -39,9 +67,9 @@ header =
 -- Utility function for making card view
 card : String -> El.Element msg -> El.Element msg
 card title element =
-  El.row [ El.spacing 30, El.width El.fill, El.paddingXY 100 20 ] [
+  El.wrappedRow [ El.spacing 30, El.width El.fill, El.paddingXY 100 20 ] [
     El.column [ El.centerX, El.width El.fill, Background.color white, El.spacing 30, El.padding 30, Border.rounded 4 ] [
-      El.el [Font.size 30] (El.text title)
+      El.el [Font.size 30, Font.bold] (El.text title)
     , El.column [ El.width (El.fillPortion 2)] []
     , element
     , El.column [ El.width (El.fillPortion 2)] []
@@ -49,7 +77,7 @@ card title element =
   ]
 
 imageOfMe : El.Element msg
-imageOfMe = El.image [ El.alignLeft, El.width (El.fill |> El.minimum (86 * 5)), El.height El.fill ] { description = "", src = asset_dir ++ "riley_photo.jpeg" }
+imageOfMe = El.image [ El.alignLeft, El.width El.fill, El.height El.fill ] { description = "", src = asset_dir ++ "riley_photo.jpeg" }
 
 aboutMe : El.Element msg
 aboutMe =
@@ -57,7 +85,7 @@ aboutMe =
     El.wrappedRow [ El.width El.fill ] [
       imageOfMe
     , El.column [ El.width El.fill, El.padding 10, El.spacing 20 ] [
-      El.el [ El.width (El.fill |> El.minimum 300)] (El.paragraph [] [El.text """My name is Riley Fischer. My pride and joy is programming
+      El.el [ El.width (El.fill |> El.minimum 100)] (El.paragraph [] [El.text """My name is Riley Fischer. My pride and joy is programming
                       and constantly pushing my skills further and further 
                       into unknown territory. I am mostly self-taught, and started off programming in Java for Minecraft modding, then slowly moved into more 
                       complicated projects. Because I was much younger I don't have many records of my first projects."""])
@@ -75,11 +103,11 @@ hyperlink label =
 project : String -> String -> String -> (String, Int, Int) -> String -> El.Element msg
 project name date url (image, width, height) desc =
   El.wrappedRow [ El.width El.fill, El.spacing 20, Border.rounded 10, Border.width 2, Border.color darkGrey, Background.color grey  ] [
-    El.column [ El.width (El.fillPortion 1), El.height (El.fill), El.spacing 30, El.padding 20 ] [
-      El.el [El.centerX, Font.bold] (El.link [] {label = El.text name, url = url})
+    El.column [ El.width (El.fillPortion 1), El.height (El.fill), El.spacing 30, El.padding 20, Border.color darkGrey, Border.widthEach { bottom = 0, left = 0, top = 0, right = 1 }] [
+      El.el [El.centerX, Font.bold, Font.underline, Font.size 20] (El.link [] {label = El.text name, url = url})
     , El.image [ El.centerX, El.centerY, Border.rounded 8, El.clip, El.centerX, El.width (El.fill |> El.maximum width), El.height (El.fill |> El.maximum height) ] { description = desc, src = image }
     ]
-  , El.column [ El.spacing 5, El.paddingXY 0 50, El.width (El.fillPortion 2), El.height El.fill ] [
+  , El.column [ El.spacing 5, El.padding 20, El.width (El.fillPortion 2), El.height El.fill ] [
       El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text date])
     , El.el [El.alignTop] (El.paragraph [Font.size 20] [El.text desc])
     ]
@@ -88,13 +116,16 @@ project name date url (image, width, height) desc =
 project_more_info : El.Element msg
 project_more_info = 
   El.wrappedRow [ El.width El.fill, El.spacing 20 ] [
-    El.column [ El.width El.fill, El.height El.fill] [
+    El.column [ El.width El.fill, El.height El.fill ] [
       El.el [] ( El.paragraph [] [ El.text "For more information go visit my github profile at https://github.com/rfmineguy!" ])
     ]
   ]
 
 opengl_engine_description : String
 opengl_engine_description = """This project is an attempt at making a somewhat functional game engine using opengl and a variety of other libraries"""
+
+mirror_lib_description : String
+mirror_lib_description = """This project was inspired by TheCodingTrain on YouTube. It is a \"simulation\" of how light might bounce off mirrors"""
 
 fireflylib_description : String
 fireflylib_description = """This project is a fully code driven game library that has the ability to faciliate very simple games"""
@@ -106,9 +137,9 @@ projects : El.Element msg
 projects =
   card "Projects" (
     El.column [ El.width El.fill, El.spacing 10 ] [
-      project "OpenGL Engine" "2020-2022" "https://github.com/rfmineguy/opengl-engine" (asset_dir ++ "opengl-engine-display.png", 300, 300) opengl_engine_description
-    , project "Firefly Lib"   "2022-2023" "https://github.com/rfmineguy/firefly-lib"   (asset_dir ++ "fflib_pong.png", 300, 300)            fireflylib_description
-    , project "RF Lang"       "2022-2023" "https://github.com/rfmineguy/rflang-2"      (asset_dir ++ "rflang_logo.png", 300, 300)           rflang_description
+      project "MirrorLib"    "2021-2022" "https://github.com/rfmineguy/mirror-lib"  (asset_dir ++ "mirror_lib.png", 300, 300) mirror_lib_description
+    , project "Firefly Lib"  "2022-2023" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "fflib_pong.png", 300, 300)            fireflylib_description
+    , project "RF Lang"      "2022-2023" "https://github.com/rfmineguy/rflang-2"    (asset_dir ++ "rflang_logo.png", 300, 300)           rflang_description
     , project_more_info
     ]
   )
@@ -133,7 +164,7 @@ of almost any operating system""")
       ] 
     , entry [
         El.el [ Font.bold ] (El.text "Programming Languages")
-      , El.row [ ] [El.el [] (El.text "Java - 2 to 3 years"), El.el [ Font.italic ] (El.text " (Mostly through Minecraft)")]
+      , El.wrappedRow [ ] [El.el [] (El.text "Java - 2 to 3 years"), El.el [ Font.italic ] (El.text " (Mostly through Minecraft)")]
       , El.row [ ] [El.el [] (El.text "C++  - 2 years")]
       , El.row [ ] [El.el [] (El.text "C    - 1 year")]
       ]
@@ -143,10 +174,13 @@ of almost any operating system""")
 experienceElement : String -> String -> String -> El.Element msg
 experienceElement time title description = 
   El.column [ El.width El.fill, El.spacing 15, El.padding 15, Border.rounded 10, Border.width 2, Border.color darkGrey, Background.color grey  ] [
-    El.el [Font.size 17] (El.text time)
+    El.wrappedRow [] [El.el [Font.size 17] (El.text time)]
   , El.el [Font.size 22, Font.bold] (El.text title)
   , El.el [Font.size 17] (El.paragraph [] [El.text description])
   ]
+
+educationElement : String -> String -> String -> El.Element msg
+educationElement = experienceElement
 
 work : El.Element msg
 work = 
@@ -166,18 +200,11 @@ volunteer =
     ]
   )
 
-educationElement : String -> String -> String -> El.Element msg
-educationElement time title description =
-  El.column [ El.width El.fill, El.spacing 15, El.padding 15, Border.rounded 10, Border.width 2, Border.color darkGrey, Background.color grey  ] [
-    El.el [Font.size 17] (El.text time)
-  , El.el [Font.size 22, Font.bold] (El.text title)
-  , El.el [Font.size 17] (El.paragraph [] [El.text description])
-  ]
-
 education : El.Element msg
 education =
   card "Education" (
     El.column [ El.width El.fill, El.spacing 10 ] [
       educationElement "2021-2022" "Computer Science AS (In Progress)" "Las Positas Community College"
+    , educationElement "2021-2022" "Computer Science AS (In Progress)" "Las Positas Community College"
     ]
   )
