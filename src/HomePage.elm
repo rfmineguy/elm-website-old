@@ -133,13 +133,17 @@ fireflylib_description = """This project is a fully code driven game library tha
 rflang_description : String
 rflang_description = """An attempt to learn compiler development through designing my own language"""
 
+c6502emu_description : String
+c6502emu_description = """A 6502 cpu emulator"""
+
 projects : El.Element msg
 projects =
   card "Projects" (
     El.column [ El.width El.fill, El.spacing 10 ] [
-      project "MirrorLib"    "2021-2022" "https://github.com/rfmineguy/mirror-lib"  (asset_dir ++ "mirror_lib.png", 300, 300) mirror_lib_description
-    , project "Firefly Lib"  "2022-2023" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "fflib_pong.png", 300, 300)            fireflylib_description
-    , project "RF Lang"      "2022-2023" "https://github.com/rfmineguy/rflang-2"    (asset_dir ++ "rflang_logo.png", 300, 300)           rflang_description
+      project "MirrorLib"    "2021-2022" "https://github.com/rfmineguy/mirror-lib"  (asset_dir ++ "mirror_lib.png", 300, 300)   mirror_lib_description
+    , project "Firefly Lib"  "2022-2023" "https://github.com/rfmineguy/firefly-lib" (asset_dir ++ "fflib_pong.png", 300, 300)   fireflylib_description
+    , project "RF Lang"      "2022-2023" "https://github.com/rfmineguy/rflang-2"    (asset_dir ++ "rflang_logo.png", 300, 300)  rflang_description
+    , project "6502emu"      "2023" "https://github.com/rfmineguy/6502emu-gui"      (asset_dir ++ "6502emu.png", 300, 300)      c6502emu_description
     , project_more_info
     ]
   )
